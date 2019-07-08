@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Characters/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Art/ratwall.png" type="Texture" id=2]
+[ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.22994
+height = 9.84988
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1 ]
+}
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+hframes = 3
+frame = 1
+
+[node name="Col" type="CollisionShape2D" parent="."]
+position = Vector2( 0.203907, -3.46641 )
+shape = SubResource( 1 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 2 )
+anims/moving = SubResource( 3 )
+
+[node name="ray" type="RayCast2D" parent="."]
+position = Vector2( 0.500671, 0 )
+scale = Vector2( 2.26911, 0.285299 )
+enabled = true
+
+[node name="camera" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.6, 0.6 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Countdown" type="Timer" parent="."]
+
+[connection signal="restart" from="HUD" to="." method="_on_HUD_restart"]
+[connection signal="timeout" from="Countdown" to="." method="_on_Countdown_timeout"]

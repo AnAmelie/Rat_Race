@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Art/rat.png" type="Texture" id=1]
+[ext_resource path="res://Characters/Rat.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 5.34876
+
+[sub_resource type="Animation" id=1]
+resource_name = "moving"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1 ]
+}
+
+[node name="Rat" type="Sprite" groups=[
+"rats",
+]]
+texture = ExtResource( 1 )
+hframes = 3
+frame = 2
+script = ExtResource( 2 )
+
+[node name="area" type="Area2D" parent="."]
+
+[node name="col" type="CollisionShape2D" parent="area"]
+scale = Vector2( 1, 2.36 )
+shape = SubResource( 2 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+anims/moving = SubResource( 1 )
+
+[connection signal="body_entered" from="area" to="." method="_on_area_body_entered"]
+[connection signal="body_exited" from="area" to="." method="_on_area_body_exited"]

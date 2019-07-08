@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Levels/GiantDrink.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Art/evil_scientist.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/desk.png" type="Texture" id=3]
+[ext_resource path="res://Characters/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Items/DeathPotion.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Characters/CatCircle.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 13.343
+
+[node name="GiantDrink" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Evil" type="Sprite" parent="."]
+position = Vector2( 426.316, -76.8422 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="area" type="Area2D" parent="Evil"]
+
+[node name="col" type="CollisionShape2D" parent="Evil/area"]
+position = Vector2( -1.43396, -12.1885 )
+scale = Vector2( 1.86319, 0.756432 )
+shape = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 100.0
+margin_bottom = 60.0
+rect_scale = Vector2( 9.2, 7.6 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 422, 43.9157 )
+
+[node name="DeathPotion" parent="." instance=ExtResource( 5 )]
+position = Vector2( 369.23, 67.278 )
+scale = Vector2( 1.88854, 3.40312 )
+
+[node name="DeathPotion2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 474.765, 72.4783 )
+scale = Vector2( 2.32382, 2.47288 )
+
+[node name="CatCircle" parent="." instance=ExtResource( 6 )]
+position = Vector2( 597.034, 80.6362 )
+
+[connection signal="body_entered" from="Evil/area" to="." method="_on_area_body_entered"]
+[connection signal="restart" from="Player" to="." method="_on_Player_restart"]

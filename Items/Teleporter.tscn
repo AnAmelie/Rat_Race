@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Items/Teleporter.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Art/grass_glitch.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/grass.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Art/grass_glitch_noise.png" type="Texture" id=4]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "glitching",
+"speed": 1.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 6.15913, 6.12918 )
+
+[node name="Teleporter" type="Node2D" groups=[
+"teleporter",
+]]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "glitching"
+frame = 5
+playing = true
+
+[node name="Area2D" type="Area2D" parent="AnimatedSprite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Area2D"]
+scale = Vector2( 1.27743, 1.25632 )
+shape = SubResource( 2 )
+
+[connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
+[connection signal="body_entered" from="AnimatedSprite/Area2D" to="." method="_on_Area2D_body_entered"]

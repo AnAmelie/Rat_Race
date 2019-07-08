@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Levels/EndScene.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Art/grass.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/textbox.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Fonts/orange kid.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Assets/Art/cheese.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Art/AnAmelie_blank_bg.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
+
+[sub_resource type="InputEventAction" id=2]
+action = "ui_accept"
+
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
+
+[node name="EndScene" type="Node"]
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="textbox" type="Sprite" parent="."]
+position = Vector2( 514.941, 295.196 )
+scale = Vector2( 9.06675, 9.88834 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="textbox"]
+margin_left = -34.0
+margin_top = -19.0
+margin_right = 134.0
+margin_bottom = 24.0
+rect_scale = Vector2( 0.476858, 0.479651 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "You won! Greatjob!
+Thanks for playing!
+                   -AnAmelie"
+
+[node name="cheese" type="TextureButton" parent="."]
+margin_left = 729.746
+margin_top = 377.515
+margin_right = 769.746
+margin_bottom = 417.515
+rect_scale = Vector2( 7.27707, 6.52665 )
+shortcut = SubResource( 3 )
+texture_normal = ExtResource( 5 )
+expand = true
+
+[node name="Logo" type="Sprite" parent="."]
+position = Vector2( 423.384, 375.065 )
+scale = Vector2( 0.470589, 0.433333 )
+texture = ExtResource( 6 )
+
+[connection signal="pressed" from="cheese" to="." method="_on_cheese_pressed"]
